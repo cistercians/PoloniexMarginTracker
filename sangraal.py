@@ -12,12 +12,12 @@ writer.writeheader()
 while True:
     info = requests.get('https://www.bitstamp.net/api/ticker/').json()
     writer.writerow({'time': info['timestamp'],
-                     'last': float(info['last']),
-                     'vwap': float(info['vwap']),
-                     'high': float(info['high']),
-                     'low': float(info['low']),
-                     'open': float(info['open']),
-                     'vol': float(info['volume'])})
+                     'last': info['last'],
+                     'vwap': info['vwap'],
+                     'high': info['high'],
+                     'low': info['low'],
+                     'open': info['open'],
+                     'vol': info['volume']})
     csv_file.flush()
     os.fsync(csv_file.fileno())
     time.sleep(60)
