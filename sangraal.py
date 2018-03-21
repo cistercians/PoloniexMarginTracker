@@ -1,9 +1,10 @@
 import os
 import csv
+import datetime
 import time
 import requests
 
-field_names = ['BTC', 'ETH', 'LTC', 'XRP', 'STR', 'XMR', 'DASH', 'BTS', 'MAID', 'FCT', 'DOGE', 'CLAM']
+field_names = ['timestamp', 'BTC', 'ETH', 'LTC', 'XRP', 'STR', 'XMR', 'DASH', 'BTS', 'MAID', 'FCT', 'DOGE', 'CLAM']
 csv_file = open('data.csv', 'w')
 
 writer = csv.DictWriter(csv_file, fieldnames=field_names)
@@ -12,7 +13,8 @@ writer.writeheader()
 while True:
     
     poloniex = requests.get('https://poloniex.com/public?command=returnTicker').json()
-    
+
+    timestamp = datetime.datetime.now()
     BTC = poloniex["USDT_BTC"]
     ETH = poloniex["BTC_ETH"]
     LTC = poloniex["BTC_LTC"]
@@ -26,7 +28,8 @@ while True:
     DOGE = poloniex["BTC_DOGE"]
     CLAM = poloniex["BTC_CLAM"]
     
-    writer.writerow({'BTC': BTC["percentChange"],
+    writer.writerow({'timestamp' : timestamp,
+                     'BTC': BTC["percentChange"],
                      'ETH': ETH["percentChange"],
                      'LTC': LTC["percentChange"],
                      'XRP': XRP["percentChange"],
