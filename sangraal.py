@@ -10,14 +10,16 @@ writer = csv.DictWriter(csv_file, fieldnames=field_names)
 writer.writeheader()
 
 while True:
-    info = requests.get('https://www.bitstamp.net/api/ticker/').json()
-    writer.writerow({'time': info['timestamp'],
-                     'last': info['last'],
-                     'vwap': info['vwap'],
-                     'high': info['high'],
-                     'low': info['low'],
-                     'open': info['open'],
-                     'vol': info['volume']})
+    bitstamp = requests.get('https://www.bitstamp.net/api/ticker/').json()
+    poloniex = requests.get('https://www.bitstamp.net/api/ticker/').json()
+    
+    writer.writerow({'time': bitstamp['timestamp'],
+                     'last': bitstamp['last'],
+                     'vwap': bitstamp['vwap'],
+                     'high': bitstamp['high'],
+                     'low': bitstamp['low'],
+                     'open': bitstamp['open'],
+                     'vol': bitstamp['volume']})
     csv_file.flush()
     os.fsync(csv_file.fileno())
     time.sleep(60)
